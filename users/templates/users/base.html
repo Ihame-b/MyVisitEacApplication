@@ -19,6 +19,7 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{% static 'users/css/bootstrap.min.css' %}" rel="stylesheet">
+    
 
     <!-- Template Stylesheet -->
     <link href="{% static 'users/css/style.css' %}" rel="stylesheet">
@@ -31,6 +32,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--Css Style -->
     <link rel="stylesheet" href="{% static 'users/css/main.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'users/css/main.css'%}">
+<link rel="stylesheet" href="{% static 'users/css/stylesignup.css'%}">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
@@ -62,20 +65,20 @@
             </div>
             <form class="d-flex" id="authstyle">
               {% if user.is_authenticated %}
-                <a href="{% url 'profile' %}" class="btn" style="color: white; background-color: #fd5e14;"type="submit" id="header-links"> Profile </a>
-                <a href="{% url 'create_product' %}" class="btn" style="color: white; background-color: #fd5e14;"type="submit" id="header-links"> Add Tourist Area </a>
-                <a href="{% url 'logout' %}" class="btn" style="color: white; background-color: #fd5e14;"type="submit" id="header-links"> Logout </a>
+                <a href="{% url 'profile' %}" class="btn" style="color: white; background-color: #e5e904;"type="submit" id="header-links"> Profile </a>
+                <a href="{% url 'create_product' %}" class="btn" style="color: white; background-color: #e5e904;"type="submit" id="header-links"> Add Tourist Area </a>
+                <a href="{% url 'logout' %}" class="btn" style="color: white; background-color: #e5e904;"type="submit" id="header-links"> Logout </a>
               {% else %}
-                <a href="{% url 'register' %}" class="btn" style="color: white; background-color: #fd5e14;"type="submit" id="header-links"> Create Account </a>
-                <a href="{% url 'login' %}" class="btn" style="color: white; background-color: #fd5e14; margin-left: 10px; "type="submit" id="header-links">Log In</a>
+                <a href="{% url 'register' %}" class="btn" style="color: white; background-color: #e5e904;"type="submit" id="header-links"> Create Account </a>
+                <a href="{% url 'login' %}" class="btn" style="color: white; background-color: #e5e904; margin-left: 10px; "type="submit" id="header-links">Log In</a>
               {% endif %}
               </form>
           </div>
         </div>
     </nav>
 
-      <div>
-        <div class="container">
+      <div style="background-image: url('https://images.unsplash.com/photo-1609861517208-e5b7b4cd4b87?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=60');background-repeat: no-repeat;background-size: cover;">
+        <div class="container" >
           {% if messages %}
           {% for message in messages %}
             <div class="alert alert-{{message.tags}}">{{message}}</div>
@@ -83,6 +86,7 @@
         {% endif %}
         </div>
         {% block content %}
+
         {% endblock content %}
       </div>
 

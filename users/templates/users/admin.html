@@ -1,0 +1,273 @@
+
+{% load crispy_forms_tags %}
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ihame admin</title>
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'users/css/admin.css' %}">
+</head>
+<body>
+
+    {% block content %}
+    <input type="checkbox" id="nav-toggle">
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            <h2><span class="lab la-accusoft"></span><span>Accusoft</span></h2>
+        </div>
+
+<div class="sidebar-menu">
+<ul>
+
+  <li>
+      <a href="" class="active">
+          <span class="las la-igloo"></span>
+          <span>Dashboard</span>
+      </a>
+  </li>
+
+  <li>
+    <a href="{% url 'Tusers' %}">
+        <span class="las la-users"></span>
+        <span>USERS</span>
+    </a>
+</li>
+
+<li>
+    <a href="">
+        <span class="las la-users"></span>
+        <span> ALL SITES AVAILABLE </span>
+    </a>
+</li>
+
+<li>
+    <a href="">
+        <span class="las la-user-circle"></span>
+        <span>GROUPES</span>
+    </a>
+</li>
+
+
+</ul>
+</div>
+    </div>
+
+    <div class="main-content">
+        <header>
+
+<h2>
+    <label for="nav-toggle">
+        <span class="las la-bars"></span>
+    </label>
+    Dashboard
+</h2>
+<div class="search-wrapper">
+    <span class="las la-search"></span>
+    <input type="search" placeholder="search here"/>
+</div>
+
+<div class="user-wrapper">
+    <img src="https://image.shutterstock.com/image-photo/beautiful-huge-statue-lord-buddha-260nw-645021859.jpg" alt="" height="40px" width="40px">
+<div>
+    <h4>Ihame Gilbert</h4>
+    <small>super admin</small>
+</div>
+</div>
+        </header>
+
+<main>
+
+<div class="cards">
+
+    <div class="card-single">
+        <div>
+            <h1>54</h1>
+            <span>Users</span>
+        </div>
+<div>
+    <span class="las la-users"></span>
+</div>
+    </div>
+
+    <div class="card-single">
+        <div>
+            <h1>79</h1>
+            <span>SITES</span>
+        </div>
+<div>
+    <span class="las la-clipboard"></span>
+</div>
+    </div>
+
+    <div class="card-single">
+        <div>
+            <h1>10</h1>
+            <span>GROUPES</span>
+        </div>
+<div>
+    <span class="las la-user-circle"></span>
+</div>
+    </div>
+
+    <div class="card-single">
+        <div>
+            <h1>100</h1>
+            <span>BOOKED</span>
+        </div>
+<div>
+    <span class="lab la-user"></span>
+</div>
+    </div>
+
+
+</div>
+
+<div class="recent-grid">
+    <div class="projects">
+        <div class="card">
+            <div class="card-header"> 
+            <h2>Recent VORCANOES</h2> 
+            <!-- <button>See all  <span class="las la-arrow-right"></span> </button>    -->
+            </div>
+       
+        <div class="card-body">   
+         <table width="100%">
+
+            <thead>
+                <tr>
+                    <td>Available site</td>
+                    <td>Country</td>
+                    <td>Discription</td>
+                </tr>
+            </thead>
+            <tbody>
+
+          {% for pro in  product%}
+          {% if pro.category == "VORCANOES"%}
+                <tr>
+                    <td>{{pro.productname}}</td>
+                    <td>{{pro.country}}</td>
+                    <td>
+                        <span class="status purple"></span>
+                        {{pro.description}}
+                    </td>
+                </tr>
+
+                {%endif%}
+                {% endfor %}     
+            </tbody>
+
+         </table>
+
+
+        </div>
+       <div class="card-body">
+        <div class="table-responsive"></div>
+    </div>
+    </div>
+    </div>
+
+    <div class="projects">
+        <div class="card">
+            <div class="card-header"> 
+            <h2>Recent HILLS</h2> 
+            <!-- <button>See all  <span class="las la-arrow-right"></span> </button>    -->
+            </div>
+       
+        <div class="card-body">   
+         <table width="100%">
+
+            <thead>
+                <tr>
+                    <td>Available site</td>
+                    <td>Country</td>
+                    <td>Discription</td>
+                </tr>
+            </thead>
+            <tbody>
+
+          {% for pro in  product%}
+          {% if pro.category == "HILLS"%}
+                <tr>
+                    <td>{{pro.productname}}</td>
+                    <td>{{pro.country}}</td>
+                    <td>
+                        <span class="status purple"></span>
+                        {{pro.description}}
+                    </td>
+                </tr>
+
+                {%endif%}
+                {% endfor %}     
+            </tbody>
+
+         </table>
+         <!-- http://127.0.0.1:7000/adminpage/ -->
+
+        </div>
+       <div class="card-body">
+        <div class="table-responsive"></div>
+    </div>
+    </div>
+    </div>
+
+
+    <div class="projects">
+        <div class="card">
+            <div class="card-header"> 
+            <h2>Recent HOTEL</h2> 
+            <!-- <button>See all  <span class="las la-arrow-right"></span> </button>    -->
+            </div>
+       
+        <div class="card-body">   
+         <table width="100%">
+
+            <thead>
+                <tr>
+                    <td>Available site</td>
+                    <td>Country</td>
+                    <td>Discription</td>
+                </tr>
+            </thead>
+            <tbody>
+
+          {% for pro in  product%}
+          {% if pro.category == "HOTEL"%}
+                <tr>
+                    <td>{{pro.productname}}</td>
+                    <td>{{pro.country}}</td>
+                    <td>
+                        <span class="status purple"></span>
+                        {{pro.description}}
+                    </td>
+                </tr>
+
+                {%endif%}
+                {% endfor %}     
+            </tbody>
+
+         </table>
+
+
+        </div>
+       <div class="card-body">
+        <div class="table-responsive"></div>
+    </div>
+    </div>
+    </div>
+
+ 
+    </div>
+</div>
+
+</main>
+
+
+    </div>
+    {% endblock %}
+</body>
+</html>

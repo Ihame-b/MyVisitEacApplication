@@ -1,0 +1,886 @@
+{% extends 'users/basedash.html' %}
+{% block title %}
+    {%  if user.is_authenticated %}
+            {% if user.is_hospital %}
+                Hospital | Dashboard
+            {% elif user.is_deliver %}
+                Health Center | Dashboard
+            {% elif user.is_superuser %}
+                Admin | Dashboard
+            {% endif %}
+    {% endif %}
+{% endblock title %}
+
+{% block username %}
+    {% if user.is_authenticated %}
+        {{user.name}}
+    {% endif %}
+{% endblock username %}
+
+{% block blood-box %}
+{% if stock %}
+{% for k, v in stock %}
+<div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>{{k}}</h3>
+                  <p>{{v}}</p>
+              </div>
+              <div class="icon">
+<!--                <i class="ion ion-scissors"></i>-->
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+{% endfor %}
+{% endif %}
+{% endblock blood-box %}
+
+{% block sidenavMenu %}
+    {%  if user.is_authenticated %}
+
+            {% if user.is_hospital %}
+
+
+<!--            <li class="nav-item has-treeview">-->
+<!--                    <a href="#" class="nav-link">-->
+<!--                      <i class="fas fa-hospital"></i>-->
+<!--                      <p>-->
+<!--                        Health Centers-->
+<!--                        <i class="fas fa-angle-left right"></i>-->
+<!--                      </p>-->
+<!--                    </a>-->
+<!--                <ul class="nav nav-treeview">-->
+<!--                      <li class="nav-item">-->
+<!--                        <a href="#" class="nav-link">-->
+<!--                          <i class="fas fa-user-plus"></i>-->
+<!--                          <p>Add new Healthy Center</p>-->
+<!--                        </a>-->
+<!--                      </li>-->
+<!--                </ul>-->
+<!--            </li>-->
+
+          <li class="nav-item">
+            <a href="{% url 'requests' %}" class="nav-link">
+              <i class="fas fa-hand-holding-usd"></i>
+              <p>Request</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'stock' %}" class="nav-link">
+              <i class="fas fa-database"></i>
+              <p>My Stock</p>
+            </a>
+          </li>
+
+            {% elif user.is_health_center %}
+
+<!--health center sidenav dashboard-->
+            <li class="nav-item">
+            <a href="{% url 'requests' %}" class="nav-link">
+              <i class="fas fa-hand-holding-usd"></i>
+              <p>Request</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'stock' %}" class="nav-link">
+              <i class="fas fa-database"></i>
+              <p>My Stock</p>
+            </a>
+          </li>
+
+<!--Admin dashboard-->
+            {% elif user.is_superuser %}
+<!--            <li class="nav-item has-treeview menu-open">-->
+<!--                    <a href="#" class="nav-link active">-->
+<!--                      <i class="nav-icon fas fa-hospital-symbol"></i>-->
+<!--                      <p>-->
+<!--                        Hospitals-->
+<!--                        <i class="right fas fa-angle-left"></i>-->
+<!--                      </p>-->
+<!--                    </a>-->
+<!--                <ul class="nav nav-treeview">-->
+<!--                      <li class="nav-item">-->
+<!--                        <a href="#" class="nav-link active">-->
+<!--                          <i class="fas fa-plus"></i>-->
+<!--                          <p>Reference Hospitals</p>-->
+<!--                        </a>-->
+<!--                      </li>-->
+<!--                      <li class="nav-item">-->
+<!--                        <a href="#" class="nav-link active">-->
+<!--                          <i class="fas fa-plus-circle"></i>-->
+<!--                          <p>District Hospitals</p>-->
+<!--                        </a>-->
+<!--                      </li>-->
+<!--                </ul>-->
+<!--            </li>-->
+
+<!--            <li class="nav-item has-treeview">-->
+<!--                    <a href="#" class="nav-link">-->
+<!--                      <i class="fas fa-hospital"></i>-->
+<!--                      <p>-->
+<!--                        Health Centers-->
+<!--                        <i class="fas fa-angle-left right"></i>-->
+<!--                      </p>-->
+<!--                    </a>-->
+<!--                <ul class="nav nav-treeview">-->
+<!--                      <li class="nav-item">-->
+<!--                        <a href="#" class="nav-link">-->
+<!--                          <i class="fas fa-user-plus"></i>-->
+<!--                          <p>Add new Healthy Center</p>-->
+<!--                        </a>-->
+<!--                      </li>-->
+<!--                </ul>-->
+<!--            </li>-->
+                      <li class="nav-item">
+                        <a href="{% url 'requests' %}" class="nav-link" data>
+                          <i class="fas fa-hand-holding-usd"></i>
+                          <p>Request</p>
+                        </a>
+                      </li>
+
+                      <li class="nav-item">
+                        <a href="{% url 'stock' %}" class="nav-link">
+                          <i class="fas fa-database"></i>
+                          <p>My Stock</p>
+                        </a>
+                      </li>
+<!--                </ul>-->
+<!--          </li>-->
+
+            {% endif %}
+    {% endif %}
+{% endblock sidenavMenu %}
+
+{% block messages %}
+ {% for message in messages %}
+    {% if message.tags == "success" %}
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+     const m = "{{message}}"
+     swal("Success!", m ,"success");
+
+</script>
+{% endif %}
+    {% endfor %}
+{% endblock messages %}
+
+{%  block content %}
+
+{%  if user.is_authenticated %}
+    {% if user.is_hospital %}
+
+<div class="row">
+<div class="col-sm-6 col-lg-12">
+<div class="card card-primary card-tabs">
+<div class="card-header p-0 pt-1">
+<ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">My Request</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Health Centers Request</a>
+    </li>
+</ul>
+</div>
+
+<div class="card-body">
+    <div class="tab-content" id="my-requests-tabContent">
+        <div class="tab-pane fade show active" id="my-requests-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
+<!--          <h4>Request</h4>-->
+<!--          <form action="">-->
+<!--            {% csrf_token %}-->
+<!--            <div class="input-group input-group-sm mb-3 mt-4">-->
+<!--              <input type="text" name="search" id="" class="form-control" placeholder="Search ...">-->
+<!--              <button  class="btn btn-secondary"><i class="fas fa-search"></i></button>-->
+<!--              <a href="{% url 'dashboard' %}" class="btn btn-dark ml-2"><i class="fas fa-sync"></i></a>-->
+<!--            </div>-->
+<!--          </form>-->
+
+            <!--button to add request-->
+            <div class="d-flex justify-content-between">
+              <a href="" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modal-add-request">
+                <i class="fas fa-plus"></i>Add Request
+              </a>
+            </div>
+
+          <table class="table table-bordered table-sm mt-4" style="">
+            <thead class="table-secondary " >
+              <tr>
+                <th>id</th>
+                <th>Quantity</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            {%  if my_requests %}
+
+              {% for request in my_requests %}
+               <tr>
+                 <td>{{request.id}}</td>
+                 <td>{{request.quantity}}</td>
+                 <td>{{request.blood_type}}</td>
+                 <td>{{request.status}}</td>
+                 <td>
+                   {% if request.status == 'approved' %}
+                   <a href="#modal-delete-request{{request.pk}}" class="btn btn-danger" title="Delete" data-toggle="modal"><i class="fas fa-trash"></i></a>
+                   <a href="" class="btn btn-secondary" title="Accept Blood" data-toggle="modal"><i class="fas fa-save text-green mr-1"></i>Accept Blood</a>
+                   <span>Approved by <em>{{request.approved_by}}</em></span>
+                   {% else %}
+                   <a href="#modal-delete-request{{request.pk}}" class="btn btn-danger" title="Delete" data-toggle="modal"><i class="fas fa-trash"></i></a>
+                   <a href="#modal-edit-request{{request.pk}}" class="btn btn-primary" title="Edit" data-toggle="modal" ><i class="fas fa-edit"></i></a>
+                   {% endif %}
+                 </td>
+               </tr>
+
+            <!-- modal for edit request -->
+            <div class="modal fade" id="modal-edit-request{{request.pk}}">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title">Edit Request</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="{% url 'update' id=request.id %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="blood-quantity">Blood Quantity</label>
+                  <input type="number" value="{{request.quantity}}" class="form-control" name="blood-quantity" id="blood-quantity" placeholder="Enter Packages">
+                </div>
+                <div class="form-group">
+                  <label for="blood-type">Blood Type</label>
+                    <select name="blood-type" value="{{request.blood_type}}" id="blood-type" class="form-control">
+                        <option value="{{request.blood_type}}">{{request.blood_type}}</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                         <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                  <input type="hidden" class="form-control" value="" name="request-province" placeholder="Province">
+                  <input type="hidden" class="form-control" value="" name="request-district" placeholder="District">
+                </div>
+                 <button type="submit" class="btn btn-primary mt-3"> <i class="fas fa-save"></i> Save Changes</button>
+                </form>
+            </div>
+            </div>
+            </div>
+            </div>
+
+            <!-- modal for delete request -->
+
+            <div class="modal fade" id="modal-delete-request{{request.pk}}">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title">Delete Request</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="" method="post">
+                {% csrf_token %}
+                    <p>Are you sure you want to delete {{request.quantity}} packages of group {{request.blood_type}}?</p>
+                    <a href="{% url 'delete' id=request.pk %}" class="btn btn-primary mt-3 alert-danger"> <i class="fas fa-trash"></i> Yes, Delete</a>
+                    <button type="submit" class="btn btn-primary mt-3"> <i class=""></i> Cancel</button>
+                </form>
+            </div>
+            </div>
+            </div>
+            </div>
+              {% endfor %}
+            {% endif %}
+            </tbody>
+
+          </table>
+
+        </div>
+        <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
+          <h4>Request</h4>
+          <form action="">
+            {% csrf_token %}
+            <div class="input-group input-group-sm mb-3 mt-4">
+              <input type="text" name="search" id="" class="form-control" placeholder="Search ...">
+              <button  class="btn btn-secondary"><i class="fas fa-search"></i></button>
+              <a href="{% url 'dashboard' %}" class="btn btn-dark ml-2"><i class="fas fa-sync"></i></a>
+            </div>
+          </form>
+          <table class="table table-bordered table-sm mt-4" style="">
+            <thead class="table-secondary " >
+              <tr>
+                <th>id</th>
+                <th>Quantity</th>
+                <th>type</th>
+                <th>Health Center Name</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            {%  if health_center_requests %}
+
+              {% for health_center_request in health_center_requests %}
+
+               <tr>
+                 <td>{{health_center_request.id}}</td>
+                 <td>{{health_center_request.quantity}}</td>
+                 <td>{{health_center_request.blood_type}}</td>
+                 <td>{{health_center_request.user.name}}</td>
+                 <td>{{health_center_request.status}}</td>
+                 <td>
+                   <a href="#modal-edit-health-request{{health_center_request.pk}}" class="btn btn-primary" title="Edit" data-toggle="modal"><i class="fas fa-edit"></i></a>
+<!--                   <a href="#" class="btn btn-danger" title="Delete" data-toggle="modal" data-target="#modal-delete-request"><i class="fas fa-trash"></i></a>-->
+                 </td>
+               </tr>
+
+               <!-- modal for edit-health-center request -->
+            <div class="modal fade" id="modal-edit-health-request{{health_center_request.pk}}">
+              <div class="modal-dialog">
+              <div class="modal-content">
+              <div class="modal-header">
+              <h4 class="modal-title">Edit Request</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+              </button>
+              </div>
+  
+              <div class="modal-body">
+                  <form action="{% url 'update-status' id=health_center_request.id %}" method="post">
+                  {% csrf_token %}
+                  <!-- <div class="form-group">
+                    <label for="blood-quantity">Blood Quantity</label>
+                    <input type="number" class="form-control" name="blood-quantity" id="blood-quantity" placeholder="Enter Packages">
+                  </div> -->
+                  <div class="form-group">
+                    <label for="blood-status">Request Status</label>
+                      <select name="blood-status" id="blood-status" class="form-control">
+                          <option value="{{health_center_request.status}}">{{health_center_request.status}}</option>
+                          <option value="approved">Approve</option>
+                          <option value="cancelled">Cancel</option>
+                      </select>
+                    <input type="hidden" class="form-control" value="" name="request-province" placeholder="Province">
+                    <input type="hidden" class="form-control" value="" name="request-district" placeholder="District">
+                  </div>
+  
+                   <button type="submit" class="btn btn-primary mt-3"> <i class="fas fa-save"></i> Save Changes</button>
+                  </form>
+              </div>
+              </div>
+              </div>
+              </div>
+              {% endfor %}
+            {% endif %}
+            </tbody>
+
+          </table>
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+
+    <!-- modal for add request -->
+            <div class="modal fade" id="modal-add-request">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title">Add New Request</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="{% url 'add-request' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="blood-quantity">Blood Quantity</label>
+                  <input type="number" class="form-control" name="blood-quantity" id="blood-quantity" placeholder="Enter Packages">
+                </div>
+                <div class="form-group">
+                  <label for="blood-type">Blood Type</label>
+                    <select name="blood-type" id="blood-type" class="form-control">
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                         <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                  <input type="hidden" class="form-control" value="" name="request-province" placeholder="Province">
+                  <input type="hidden" class="form-control" value="" name="request-district" placeholder="District">
+                </div>
+                 <button type="submit" class="btn btn-primary mt-3">Save Request</button>
+                </form>
+            </div>
+            </div>
+            </div>
+            </div>
+
+    
+
+
+
+</div>
+
+{% elif user.is_health_center %}
+<div class="row">
+<div class="col-sm-6 col-lg-12">
+<div class="card card-primary card-tabs">
+<div class="card-header p-0 pt-1">
+<ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">My Request</a>
+    </li>
+</ul>
+</div>
+
+<div class="card-body">
+    <div class="tab-content" id="custom-tabs-one-tabContent">
+        <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
+<!--          <h4>Request</h4>-->
+<!--          <form action="">-->
+<!--            {% csrf_token %}-->
+<!--            <div class="input-group input-group-sm mb-3 mt-4">-->
+<!--              <input type="text" name="search" id="" class="form-control" placeholder="Search ...">-->
+<!--              <button  class="btn btn-secondary"><i class="fas fa-search"></i></button>-->
+<!--              <a href="{% url 'dashboard' %}" class="btn btn-dark ml-2"><i class="fas fa-sync"></i></a>-->
+<!--            </div>-->
+<!--          </form>-->
+
+            <!--button to add request-->
+            <div class="d-flex justify-content-between">
+              <a href="" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modal-add-request">
+                <i class="fas fa-plus"></i>Add Request
+              </a>
+            </div>
+
+          <table class="table table-bordered table-sm mt-4" style="">
+            <thead class="table-secondary " >
+              <tr>
+                <th>id</th>
+                <th>Quantity</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            {%  if my_requests %}
+
+              {% for request in my_requests %}
+               <tr>
+                 <td>{{request.id}}</td>
+                 <td>{{request.quantity}}</td>
+                 <td>{{request.blood_type}}</td>
+                 <td>{{request.status}}</td>
+                 <td>
+                   {% if request.status == 'approved' %}
+                   <a href="#modal-delete-request{{request.pk}}" class="btn btn-danger" title="Delete" data-toggle="modal"><i class="fas fa-trash"></i></a>
+                   <a href="" class="btn btn-secondary" title="Accept Blood" data-toggle="modal"><i class="fas fa-save text-green mr-1"></i>Accept Blood</a>
+                   <span>Approved by <em>{{request.approved_by}}</em></span>
+                   {% else %}
+                   <a href="#modal-edit-request{{request.pk}}" class="btn btn-primary" title="Edit" data-toggle="modal" ><i class="fas fa-edit"></i></a>
+                   <a href="#modal-delete-request{{request.pk}}" class="btn btn-danger" title="Delete" data-toggle="modal"><i class="fas fa-trash"></i></a>
+                   {% endif %}
+                  </td>
+               </tr>
+
+            <!-- modal for edit request -->
+            <div class="modal fade" id="modal-edit-request{{request.pk}}">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title">Edit Request</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="{% url 'update' id=request.id %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="blood-quantity">Blood Quantity</label>
+                  <input type="number" value="{{request.quantity}}" class="form-control" name="blood-quantity" id="blood-quantity" placeholder="Enter Packages">
+                </div>
+                <div class="form-group">
+                  <label for="blood-type">Blood Type</label>
+                    <select name="blood-type" value="{{request.blood_type}}" id="blood-type" class="form-control">
+                        <option value="{{request.blood_type}}">{{request.blood_type}}</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                         <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                  <input type="hidden" class="form-control" value="" name="request-province" placeholder="Province">
+                  <input type="hidden" class="form-control" value="" name="request-district" placeholder="District">
+                </div>
+                 <button type="submit" class="btn btn-primary mt-3"> <i class="fas fa-save"></i> Save Changes</button>
+                </form>
+            </div>
+            </div>
+            </div>
+            </div>
+
+            <!-- modal for delete request -->
+
+            <div class="modal fade" id="modal-delete-request{{request.pk}}">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title">Delete Request</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="" method="post">
+                {% csrf_token %}
+                    <p>Are you sure you want to delete {{request.quantity}} packages of group {{request.blood_type}}?</p>
+                    <a href="{% url 'delete' id=request.pk %}" class="btn btn-primary mt-3 alert-danger"> <i class="fas fa-trash"></i> Yes, Delete</a>
+                    <button type="submit" class="btn btn-primary mt-3"> <i class=""></i> Cancel</button>
+                </form>
+            </div>
+            </div>
+            </div>
+            </div>
+              {% endfor %}
+            {% endif %}
+            </tbody>
+
+          </table>
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+
+    <!-- modal for add request -->
+            <div class="modal fade" id="modal-add-request">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title">Add New Request</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="{% url 'add-request' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="blood-quantity">Blood Quantity</label>
+                  <input type="number" class="form-control" name="blood-quantity" id="blood-quantity" placeholder="Enter Packages">
+                </div>
+                <div class="form-group">
+                  <label for="blood-type">Blood Type</label>
+                    <select name="blood-type" id="blood-type" class="form-control">
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                         <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                  <input type="hidden" class="form-control" value="" name="request-province" placeholder="Province">
+                  <input type="hidden" class="form-control" value="" name="request-district" placeholder="District">
+                </div>
+                 <button type="submit" class="btn btn-primary mt-3">Save Request</button>
+                </form>
+            </div>
+            </div>
+            </div>
+            </div>
+
+    <!-- modal for edit-health-center request -->
+            <div class="modal fade" id="modal-edit-health-request">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title">Edit Request</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="blood-quantity">Blood Quantity</label>
+                  <input type="number" class="form-control" name="blood-quantity" id="blood-quantity" placeholder="Enter Packages">
+                </div>
+                <div class="form-group">
+                  <label for="blood-type">Blood Type</label>
+                    <select name="blood-type" id="blood-type" class="form-control">
+                        <option value="">A+</option>
+                        <option value="">A-</option>
+                         <option value="">B+</option>
+                        <option value="">B-</option>
+                        <option value="">AB+</option>
+                        <option value="">AB-</option>
+                        <option value="">O+</option>
+                        <option value="">O-</option>
+                    </select>
+                  <input type="hidden" class="form-control" value="" name="request-province" placeholder="Province">
+                  <input type="hidden" class="form-control" value="" name="request-district" placeholder="District">
+                </div>
+
+                 <div class="form-group">
+                  <label for="blood-type">Status</label>
+                    <select name="blood-type" id="status" class="form-control">
+                        <option value="">Pending</option>
+                        <option value="">Approval</option>
+                    </select>
+                </div>
+                 <button type="submit" class="btn btn-primary mt-3"> <i class="fas fa-save"></i> Save Changes</button>
+                </form>
+            </div>
+            </div>
+            </div>
+            </div>
+</div>
+{% elif user.is_superuser %}
+<div class="row">
+<div class="col-sm-6 col-lg-12">
+<div class="card card-primary card-tabs">
+<div class="card-header p-0 pt-1">
+<ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Hospital Requests</a>
+    </li>
+</ul>
+</div>
+
+<div class="card-body">
+    <div class="tab-content" id="custom-tabs-one-tabContent">
+        <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
+<!--          <h4>Request</h4>-->
+<!--          <form action="">-->
+<!--            {% csrf_token %}-->
+<!--            <div class="input-group input-group-sm mb-3 mt-4">-->
+<!--              <input type="text" name="search" id="" class="form-control" placeholder="Search ...">-->
+<!--              <button  class="btn btn-secondary"><i class="fas fa-search"></i></button>-->
+<!--              <a href="{% url 'dashboard' %}" class="btn btn-dark ml-2"><i class="fas fa-sync"></i></a>-->
+<!--            </div>-->
+<!--          </form>-->
+
+            <!--button to add request-->
+            <div class="d-flex justify-content-between">
+              <a href="" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modal-add-request">
+                <i class="fas fa-plus"></i>Add Request
+              </a>
+            </div>
+
+          <table class="table table-bordered table-sm mt-4" >
+            <thead class="table-secondary " >
+              <tr>
+                <th>id</th>
+                <th>Hospital Name</th>
+                <th>Quantity</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            {%  if hospital_requests %}
+
+              {% for request in hospital_requests %}
+               <tr>
+                 <td>{{request.id}}</td>
+                 <td>{{request.user}}</td>
+                 <td>{{request.quantity}}</td>
+                 <td>{{request.blood_type}}</td>
+                 <td>{{request.status}}</td>
+                 <td>
+                   <a href="#modal-edit-request{{request.pk}}" class="btn btn-primary" title="Edit" data-toggle="modal" ><i class="fas fa-edit"></i></a>
+<!--                   <a href="#modal-delete-request{{request.pk}}" class="btn btn-danger" title="Delete" data-toggle="modal"><i class="fas fa-trash"></i></a>-->
+                 </td>
+               </tr>
+
+            <!-- modal for edit request -->
+            <div class="modal fade" id="modal-edit-request{{request.pk}}">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title">Edit Request</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="{% url 'update-status' id=request.id %}" method="post">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                  <label for="blood-status">Request status</label>
+                    <select name="blood-status" value="{{request.blood_status}}" id="blood-status" class="form-control">
+                        <option value="{{request.status}}">{{request.status}}</option>
+                        <option value="approved">Approve</option>
+                        <option value="cancelled">Cancel</option>
+                    </select>
+                  <input type="hidden" class="form-control" value="" name="request-province" placeholder="Province">
+                  <input type="hidden" class="form-control" value="" name="request-district" placeholder="District">
+                </div>
+                 <button type="submit" class="btn btn-primary mt-3"> <i class="fas fa-save"></i> Save Changes</button>
+                </form>
+            </div>
+            </div>
+            </div>
+            </div>
+
+            <!-- modal for delete request -->
+
+            <div class="modal fade" id="modal-delete-request{{request.pk}}">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title">Delete Request</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="" method="post">
+                {% csrf_token %}
+                    <p>Are you sure you want to delete {{request.quantity}} packages of group {{request.blood_type}}?</p>
+                    <a href="{% url 'delete' id=request.pk %}" class="btn btn-primary mt-3 alert-danger"> <i class="fas fa-trash"></i> Yes, Delete</a>
+                    <button type="submit" class="btn btn-primary mt-3"> <i class=""></i> Cancel</button>
+                </form>
+            </div>
+            </div>
+            </div>
+            </div>
+              {% endfor %}
+            {% endif %}
+            </tbody>
+
+          </table>
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+
+    <!-- modal for add request -->
+            <div class="modal fade" id="modal-add-request">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title">Add New Request</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="{% url 'add-request' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="blood-quantity">Blood Quantity</label>
+                  <input type="number" class="form-control" name="blood-quantity" id="blood-quantity" placeholder="Enter Packages">
+                </div>
+                <div class="form-group">
+                  <label for="blood-type">Blood Type</label>
+                    <select name="blood-type" id="blood-type" class="form-control">
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                         <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                  <input type="hidden" class="form-control" value="" name="request-province" placeholder="Province">
+                  <input type="hidden" class="form-control" value="" name="request-district" placeholder="District">
+                </div>
+                 <button type="submit" class="btn btn-primary mt-3">Save Request</button>
+                </form>
+            </div>
+            </div>
+            </div>
+            </div>
+
+    <!-- modal for edit-health-center request -->
+            <div class="modal fade" id="modal-edit-health-request">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title">Edit Request</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="blood-quantity">Blood Quantity</label>
+                  <input type="number" class="form-control" name="blood-quantity" id="blood-quantity" placeholder="Enter Packages">
+                </div>
+                <div class="form-group">
+                  <label for="blood-type">Blood Type</label>
+                    <select name="blood-type" id="blood-type" class="form-control">
+                        <option value="">A+</option>
+                        <option value="">A-</option>
+                         <option value="">B+</option>
+                        <option value="">B-</option>
+                        <option value="">AB+</option>
+                        <option value="">AB-</option>
+                        <option value="">O+</option>
+                        <option value="">O-</option>
+                    </select>
+                  <input type="hidden" class="form-control" value="" name="request-province" placeholder="Province">
+                  <input type="hidden" class="form-control" value="" name="request-district" placeholder="District">
+                </div>
+
+                 <div class="form-group">
+                  <label for="blood-type">Status</label>
+                    <select name="blood-type" id="status" class="form-control">
+                        <option value="">Pending</option>
+                        <option value="">Approval</option>
+                    </select>
+                </div>
+                 <button type="submit" class="btn btn-primary mt-3"> <i class="fas fa-save"></i> Save Changes</button>
+                </form>
+            </div>
+            </div>
+            </div>
+            </div>
+</div>
+
+    {% endif %}
+{% endif %}
+{%  endblock content %}

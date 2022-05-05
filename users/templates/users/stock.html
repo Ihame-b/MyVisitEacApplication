@@ -1,0 +1,315 @@
+{% extends 'users/basedash.html' %}
+{% block title %}
+    {%  if user.is_authenticated %}
+            {% if user.is_hospital %}
+                Hospital | Dashboard
+            {% elif user.is_deliver %}
+                Health Center | Dashboard
+            {% elif user.is_superuser %}
+                Admin | Dashboard
+            {% endif %}
+    {% endif %}
+{% endblock title %}
+
+{% block username %}
+    {%  if user.is_authenticated %}
+        {{user.name}}
+    {% endif %}
+{% endblock username %}
+
+{% block blood-box %}
+{% if stock %}
+{% for k, v in stock %}
+<div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>{{k}}</h3>
+                  <p>{{v}}</p>
+              </div>
+              <div class="icon">
+<!--                <i class="ion ion-scissors"></i>-->
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+{% endfor %}
+{% endif %}
+{% endblock blood-box %}
+
+{% block sidenavMenu %}
+    {% if user.is_authenticated %}
+
+            {% if user.is_hospital %}
+<!--            <li class="nav-item has-treeview">-->
+<!--                    <a href="#" class="nav-link">-->
+<!--                      <i class="fas fa-hospital"></i>-->
+<!--                      <p>-->
+<!--                        Health Centers-->
+<!--                        <i class="fas fa-angle-left right"></i>-->
+<!--                      </p>-->
+<!--                    </a>-->
+<!--                <ul class="nav nav-treeview">-->
+<!--                      <li class="nav-item">-->
+<!--                        <a href="#" class="nav-link">-->
+<!--                          <i class="fas fa-user-plus"></i>-->
+<!--                          <p>Add new Healthy Center</p>-->
+<!--                        </a>-->
+<!--                      </li>-->
+<!--                </ul>-->
+<!--          </li>-->
+
+          <li class="nav-item">
+            <a href="{% url 'requests' %}" class="nav-link">
+              <i class="fas fa-hand-holding-usd"></i>
+              <p>Request</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'stock' %}" class="nav-link">
+              <i class="fas fa-database"></i>
+              <p>My Stock</p>
+            </a>
+          </li>
+            {% elif user.is_health_center %}
+<!--health center sidenav dashboard-->
+            <li class="nav-item">
+            <a href="{% url 'requests' %}" class="nav-link">
+              <i class="fas fa-hand-holding-usd"></i>
+              <p>Request</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'stock' %}" class="nav-link">
+              <i class="fas fa-database"></i>
+              <p>My Stock</p>
+            </a>
+          </li>
+
+<!--Admin dashboard-->
+            {% elif user.is_superuser %}
+
+<!--            <li class="nav-item has-treeview menu-open">-->
+<!--                    <a href="#" class="nav-link active">-->
+<!--                      <i class="nav-icon fas fa-hospital-symbol"></i>-->
+<!--                      <p>-->
+<!--                        Hospitals-->
+<!--                        <i class="right fas fa-angle-left"></i>-->
+<!--                      </p>-->
+<!--                    </a>-->
+<!--                <ul class="nav nav-treeview">-->
+<!--                      <li class="nav-item">-->
+<!--                        <a href="#" class="nav-link active">-->
+<!--                          <i class="fas fa-plus"></i>-->
+<!--                          <p>Reference Hospitals</p>-->
+<!--                        </a>-->
+<!--                      </li>-->
+<!--                      <li class="nav-item">-->
+<!--                        <a href="#" class="nav-link active">-->
+<!--                          <i class="fas fa-plus-circle"></i>-->
+<!--                          <p>District Hospitals</p>-->
+<!--                        </a>-->
+<!--                      </li>-->
+<!--                </ul>-->
+<!--            </li>-->
+
+<!--            <li class="nav-item has-treeview">-->
+<!--                    <a href="#" class="nav-link">-->
+<!--                      <i class="fas fa-hospital"></i>-->
+<!--                      <p>-->
+<!--                        Health Centers-->
+<!--                        <i class="fas fa-angle-left right"></i>-->
+<!--                      </p>-->
+<!--                    </a>-->
+<!--                <ul class="nav nav-treeview">-->
+<!--                      <li class="nav-item">-->
+<!--                        <a href="#" class="nav-link">-->
+<!--                          <i class="fas fa-user-plus"></i>-->
+<!--                          <p>Add new Healthy Center</p>-->
+<!--                        </a>-->
+<!--                      </li>-->
+<!--                </ul>-->
+<!--             </li>-->
+
+                      <li class="nav-item">
+                        <a href="{% url 'requests' %}" class="nav-link" data>
+                          <i class="fas fa-hand-holding-usd"></i>
+                          <p>Request</p>
+                        </a>
+                      </li>
+
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                          <i class="fas fa-database"></i>
+                          <p>My Stock</p>
+                        </a>
+                      </li>
+<!--                </ul>-->
+<!--          </li>-->
+
+
+            {% endif %}
+    {% endif %}
+{% endblock sidenavMenu %}
+
+{%  block content %}
+<div class="d-flex justify-content-between">
+  <a href="" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modal-add-stock">
+    <i class="fas fa-plus"></i>Add New Stock
+  </a>
+</div>
+
+<form action="">
+        {% csrf_token %}
+        <div class="input-group input-group-sm mb-3 mt-4">
+          <input type="text" name="search" id="search" class="form-control" placeholder="Search ...">
+          <button  class="btn btn-secondary"><i class="fas fa-search"></i></button>
+          <a href="" class="btn btn-dark ml-2"><i class="fas fa-sync"></i></a>
+        </div>
+      </form>
+      <table class="table table-bordered table-sm mt-4" >
+        <thead class="table-secondary " >
+          <tr>
+<!--            <th>id</th>-->
+            <th>Quantity</th>
+            <th>Blood Type</th>
+            <th>Description</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+        {%  if all_blood %}
+          {% for blood in all_blood %}
+           <tr>
+<!--             <td>{{blood.id}}</td>-->
+             <td>{{blood.quantity}}</td>
+             <td>{{blood.blood_type}}</td>
+             <td>{{blood.description}}</td>
+             <td>
+               <a href="#modal-edit-stock{{blood.id}}" class="btn btn-primary" title="Edit" data-toggle="modal" data-target="#"><i class="fas fa-edit"></i></a>
+               <a href="#modal-delete-stock{{blood.id}}" class="btn btn-danger" title="Delete" data-toggle="modal" data-target="#"><i class="fas fa-trash"></i></a>
+             </td>
+           </tr>
+
+        <!-- modal for edit stock blood  -->
+            <div class="modal fade" id="modal-edit-stock{{blood.id}}">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title">Edit Stock</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="{% url 'update-stock' id=blood.id %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="blood-quantity">Blood Quantity</label>
+                  <input type="number" value="{{blood.quantity}}" class="form-control" name="blood-quantity" id="blood-quantity" placeholder="Enter Packages">
+                </div>
+                <div class="form-group">
+                  <label for="blood-type">Blood Type</label>
+                    <select name="blood-type" id="blood-type" class="form-control">
+                        <option value="{{blood.blood_type}}">{{blood.blood_type}}</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                         <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+
+                </div>
+                 <div class="form-group">
+                     <textarea name="description" id="" cols="30" rows="10" class="form-control">
+                        {{blood.description}}
+                     </textarea>
+                 </div>
+                 <button type="submit" class="btn btn-primary mt-3"> <i class="fas fa-save"></i> Save Changes</button>
+                </form>
+            </div>
+            </div>
+            </div>
+            </div>
+
+        <!-- modal for delete stock -->
+            <div class="modal fade" id="modal-delete-stock{{blood.id}}">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title">Delete Stock</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="" method="post">
+                {% csrf_token %}
+                    <p>Are you sure you want to delete this Stock of {{blood.quantity}} packages?</p>
+                    <a href="{% url 'delete-stock' id=blood.id %}" class="btn btn-primary mt-3 alert-danger"> <i class="fas fa-trash"></i> Yes, Delete</a>
+                    <button type="submit" class="btn btn-primary mt-3"> <i class=""></i> Cancel</button>
+                </form>
+            </div>
+            </div>
+            </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+        </tbody>
+
+      </table>
+
+<!-- modal for add stock -->
+            <div class="modal fade" id="modal-add-stock">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title">Add New Stock</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="blood-quantity">Blood Quantity</label>
+                  <input type="number" class="form-control" name="blood-quantity" id="blood-quantity" placeholder="Enter Packages">
+                </div>
+                <div class="form-group">
+                  <label for="blood-type">Blood Type</label>
+                    <select name="blood-type" id="blood-type" class="form-control">
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                         <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                  <input type="hidden" class="form-control" value="" name="request-province" placeholder="Province">
+                  <input type="hidden" class="form-control" value="" name="request-district" placeholder="District">
+                </div>
+                 <div class="form-group">
+                     <textarea name="description"  cols="30" rows="10" class="form-control">
+
+                     </textarea>
+                 </div>
+                 <button type="submit" class="btn btn-primary mt-3"> <i class="fas fa-plus"></i> Add To stock</button>
+                </form>
+            </div>
+            </div>
+            </div>
+            </div>
+
+
+
+
+{%  endblock content %}

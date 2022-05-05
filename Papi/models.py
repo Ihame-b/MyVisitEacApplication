@@ -10,21 +10,30 @@ from django.db import models
 class Product(models.Model):
 
     country=(
-        ('RWANDA','rwanda'),
-        ('Uganda','uganda'),
-        ('BURUNDI','burundi'),
-        ('CONGO','congo'),
+        ('congo', 'CONGO'),
+        ('kenya', 'KENYA'),
+        ('burundi', 'BURUNDI'),
+        ('south sudan', 'SOUTH SUDAN'),
+        ('uganda', 'UGANDA'),
+        ('tanzania', 'TANZANIA'),
+        ('rwanda', 'RWANDA'),
      )
+
 
     category=(
         ('VORCANOES','vorcanoes'),
-        ('HOTEL','hotel'),
+        ('TRANSPORTANTION', 'transportation'),
+        ('ACCOMODATION', 'accomodation'),
+        ('HOTEL/RESTAURANTS','hotel/restaurants'),
+        ('NATIONAL PARKS', 'national Parks'),
+        ('CULTURE & HERITAGE', 'culture & heritage'),
+        ('SPORTS & ADVANTURE', 'sports & advanture'),
         ('HILLS','hills')
     )
 
     status=(
-        ('FREE','free'),
-        ('NOT FREE','not free')
+        ('free', 'FREE'),
+        ('not free', 'NOT FREE')
     )
 
     productname = models.CharField(max_length=200, null=False, blank=False)
@@ -34,8 +43,8 @@ class Product(models.Model):
     category = models.CharField(max_length=25,choices=category,default=category[0][0])
     image =models.ImageField(upload_to='product_image')
     payment =models.CharField(max_length=25,choices=status,default=status[0][0])
-    # description = models.CharField(max_length=10000, null=False, blank=False)
-
+    description = models.CharField(max_length=10000, null=False, blank=False)
+    GBLink=models.URLField(max_length=2000)
     placed_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
 

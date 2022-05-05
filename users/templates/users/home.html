@@ -46,6 +46,7 @@
 
 
 <!-- Full Screen Search Start -->
+<div style="display: inline;" class="container">
 <div class="modal fade" id="searchModal" tabindex="-1">
     <div class="modal-dialog modal-fullscreen">
         <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
@@ -62,11 +63,12 @@
     </div>
 </div>
 
- <h1 style="color: black; align-items: center;">Available Tourist </h1>
+<br>
+<h1 style="color: black; padding-left: 35px; align-content: center;" class="text-center">Available Tourist </h1>
 <div class=" container">
     <div class="search-box">
         <i class="bx bx-search"></i>
-        <input type="text" placeholder="Search a movie">
+        <input type="text" placeholder="Search Tourist">
     </div>
 
     <h1 style="color: black;">Available VOLCANOES </h1>
@@ -78,9 +80,10 @@
                     <div class="card">
                         <img style="height: 100%; width: 100%;" src="{{ pro.image.url }}" alt="">
                         <div class="card-body">
-                          <h5 class="card-title">{{pro.category}}</h5>
-                          <p class="card-text">{{pro}}</p>
-                          <a href="#" class="btn btn-primary">visit me please</a>
+                            <h1 class="card-title" style="color: black;">{{pro.payment}}</h1> 
+                          <h5 class="card-title">{{pro.productname}}</h5>
+                          <p class="card-text">{{pro.description}}</p>
+                          <a href="{{pro.GBLink}}" target="_blank" class="btn btn-primary">visit me please</a>
                         </div>
                 </div>
     </div>
@@ -88,7 +91,7 @@
     {% endfor %}
 </div> 
 
-<br><br> -->
+<br><br> 
     <h1 style="color: black;">Available HOTEL </h1>
     <div class="row">
     {% for pro in product %}
@@ -97,9 +100,10 @@
                 <div class="card">
                     <img style="height: 100%; width: 100%;" src="{{ pro.image.url }}" alt="">
                     <div class="card-body">
-                      <h5 class="card-title">{{pro.category}}</h5>
-                      <p class="card-text">{{pro}}</p>
-                      <a href="#" class="btn btn-primary">visit me please</a>
+                        <h1 class="card-title" style="color: black;">{{pro.payment}}</h1> 
+                      <h5 class="card-title">{{pro.productname}}</h5>
+                      <p class="card-text">{{pro.description}}</p>
+                      <a href="{{pro.GBLink}}" target="_blank" class="btn btn-primary">visit me please</a>
                     </div>
                   </div>
 </div>
@@ -118,26 +122,230 @@
                     <div class="card">
                         <img style="height: 100%; width: 100%;" src="{{ pro.image.url }}" alt="">
                         <div class="card-body">
-                          <h5 class="card-title">{{pro.category}}</h5>
-                          <p class="card-text">{{pro}}</p>
-                          <a href="#" class="btn btn-primary">visit me please</a>
+                            <h1 class="card-title" style="color: black;">{{pro.payment}}</h1> 
+                          <h5 class="card-title">{{pro.productname}}</h5>
+                          <p class="card-text">{{pro.description}}</p>
+                          <a href="{{pro.GBLink}}" target="_blank" class="btn btn-primary">visit me please</a>
                         </div>
                       </div>
     </div>
-
                 {%endif%}
     {% endfor %}    
 </div>
+
+<br><br>
+<h1 style="color: black;">Available ACCOMODATION </h1>
+<div class="row">
+{% for pro in product %}
+{% if pro.category == "ACCOMODATION"%}
+        
+            <div class="col-lg-4">
+                <div class="card">
+                    <img style="height: 100%; width: 100%;" src="{{ pro.image.url }}" alt="">
+                    <div class="card-body">
+                        <h1 class="card-title" style="color: black;">{{pro.payment}}</h1> 
+                      <h5 class="card-title">{{pro.productname}}</h5>
+                      <p class="card-text">{{pro.description}}</p>
+                      <a href="{{pro.GBLink}}" target="_blank" class="btn btn-primary">visit me please</a>
+                    </div>
+                  </div>
+</div>
+            {%endif%}
+{% endfor %}    
+</div>
+
+
+<br><br>
+<h1 style="color: black;">Available TRANSPORTANTION </h1>
+<div class="row">
+{% for pro in product %}
+{% if pro.category == "TRANSPORTANTION"%}
+        
+            <div class="col-lg-4">
+                <div class="card">
+                    <img style="height: 100%; width: 100%;" src="{{ pro.image.url }}" alt="">
+                    <div class="card-body">
+                        <h1 class="card-title" style="color: black;">{{pro.payment}}</h1> 
+                      <h5 class="card-title">{{pro.productname}}</h5>
+                      <p class="card-text">{{pro.description}}</p>
+                      <a href="{{pro.GBLink}}" target="_blank" class="btn btn-primary">visit me please</a>
+                    </div>
+                  </div>
+</div>
+            {%endif%}
+{% endfor %}    
+</div>
+
+<br><br>
+<h1 style="color: black;">Available HOTEL/RESTAURANTS </h1>
+<div class="row">
+{% for pro in product %}
+{% if pro.category == "HOTEL/RESTAURANTS"%}
+        
+            <div class="col-lg-4">
+                <div class="card">
+                    <img style="height: 100%; width: 100%;" src="{{ pro.image.url }}" alt="">
+                    <div class="card-body">
+                        <h1 class="card-title" style="color: black;">{{pro.payment}}</h1> 
+                      <h5 class="card-title">{{pro.productname}}</h5>
+                      <p class="card-text">{{pro.description}}</p>
+                      <a href="{{pro.GBLink}}" target="_blank" class="btn btn-primary">visit me please</a>
+                    </div>
+                  </div>
+</div>
+            {%endif%}
+{% endfor %}    
+</div>
+
+<br><br>
+<h1 style="color: black;">Available NATIONAL PARKS </h1>
+<div class="row">
+{% for pro in product %}
+{% if pro.category == "NATIONAL PARKS"%}
+        
+            <div class="col-lg-4">
+                <div class="card">
+                    <img style="height: 100%; width: 100%;" src="{{ pro.image.url }}" alt="">
+                    <div class="card-body">
+                        <h1 class="card-title" style="color: black;">{{pro.payment}}</h1> 
+                      <h5 class="card-title">{{pro.productname}}</h5>
+                      <p class="card-text">{{pro.description}}</p>
+                      <a href="{{pro.GBLink}}" target="_blank" class="btn btn-primary">visit me please</a>
+                    </div>
+                  </div>
+</div>
+            {%endif%}
+{% endfor %}    
+</div>
+
+<br><br>
+<h1 style="color: black;">Available CULTURE & HERITAGE </h1>
+<div class="row">
+{% for pro in product %}
+{% if pro.category == "CULTURE & HERITAGE"%}
+        
+            <div class="col-lg-4">
+                <div class="card">
+                    <img style="height: 100%; width: 100%;" src="{{ pro.image.url }}" alt="">
+                    <div class="card-body">
+                        <h1 class="card-title" style="color: black;">{{pro.payment}}</h1> 
+                      <h5 class="card-title">{{pro.productname}}</h5>
+                      <p class="card-text">{{pro.description}}</p>
+                      <a href="{{pro.GBLink}}" target="_blank" class="btn btn-primary">visit me please</a>
+                    </div>
+                  </div>
+</div>
+            {%endif%}
+{% endfor %}    
+</div>
+
+
+
+
+<br><br>
+<h1 style="color: black;">SPORTS & ADVANTURE </h1>
+<div class="row">
+{% for pro in product %}
+{% if pro.category == "SPORTS & ADVANTURE"%}
+        
+            <div class="col-lg-4">
+                <div class="card">
+                    <img style="height: 100%; width: 100%;" src="{{ pro.image.url }}" alt="">
+                    <div class="card-body">
+                        <h1 class="card-title" style="color: black;">{{pro.payment}}</h1> 
+                      <h5 class="card-title">{{pro.productname}}</h5>
+                      <p class="card-text">{{pro.description}}</p>
+                      <a href="{{pro.GBLink}}" target="_blank" class="btn btn-primary">visit me please</a>
+                    </div>
+                  </div>
+</div>
+            {%endif%}
+{% endfor %}    
+</div>
+
+
+
+
+
+
+
+
+</div>
 </div>
 </div>
 
+ <!-- Blog Start -->
+ <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s" style="background-image: url('https://www.planetware.com/wpimages/2019/09/may-best-places-to-travel-machu-picchu-peru.jpg');">
+    <div class="container py-5">
+        <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+            <h5 class="fw-bold text-primary text-uppercase">Online Tools & Services</h5>
+            <h1 class="mb-0">Read The Latest activity from Our EAC Post</h1>
+        </div>
+        <div class="row g-5">
+            <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
+                <div class="blog-item bg-light rounded overflow-hidden">
+                    <div class="blog-img position-relative overflow-hidden">
+                        <img class="img-fluid" src="https://www.eac.int/images/Adverts/Trade_Help_desk.png" alt="">
+                        <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4" href="">EAC Trade Information Portal</a>
+                    </div>
+                    <div class="p-4">
+                        <div class="d-flex mb-3">
+                            <small class="me-3"><i class="far fa-user text-primary me-2"></i>John Doe</small>
+                            <small><i class="far fa-calendar-alt text-primary me-2"></i>01 Jan, 2045</small>
+                        </div>
+                        <h4 class="mb-3">EAC Trade Information Portal</h4>
+                        <p>The EAC Trade Information Portal (TIP) gives access to step-by-step guides on licenses, pre-clearance permits and clearance formalities for the most traded goods within, to and from the East African Community EAC).</p>
+                        <a class="text-uppercase" href="http://tradehelpdesk.eac.int/">Read More <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 wow slideInUp" data-wow-delay="0.6s">
+                <div class="blog-item bg-light rounded overflow-hidden">
+                    <div class="blog-img position-relative overflow-hidden">
+                        <img class="img-fluid" src="https://www.eac.int/images/images/EAC_Health_Portal_1.png" alt="">
+                        <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4" href="">EAC Health Portal</a>
+                    </div>
+                    <div class="p-4">
+                        <div class="d-flex mb-3">
+                            <small class="me-3"><i class="far fa-user text-primary me-2"></i>John Doe</small>
+                            <small><i class="far fa-calendar-alt text-primary me-2"></i>01 Jan, 2045</small>
+                        </div>
+                        <h4 class="mb-3">EAC Health Portal</h4>
+                        <p>The EAC Health Portal is the official comprehensive compendium of health information in East Africa. A dynamic, structured, and interactive single-point-of-access of health information in the region.</p>
+                        <a class="text-uppercase" href="https://www.eahealth.org/">Read More <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 wow slideInUp" data-wow-delay="0.9s">
+                <div class="blog-item bg-light rounded overflow-hidden">
+                    <div class="blog-img position-relative overflow-hidden">
+                        <img class="img-fluid" src="https://www.eac.int/images/images/50MAWS1.png" alt="">
+                        <a class="position-absolute top-0 start-0 bg-primary text-white rounded-end mt-5 py-2 px-4" href="">50 Million African Women Speak</a>
+                    </div>
+                    <div class="p-4">
+                        <div class="d-flex mb-3">
+                            <small class="me-3"><i class="far fa-user text-primary me-2"></i>John Doe</small>
+                            <small><i class="far fa-calendar-alt text-primary me-2"></i>01 Jan, 2045</small>
+                        </div>
+                        <h4 class="mb-3">50 Million African Women Speak</h4>
+                        <p>50 Million African Women Speak is a digital platform which is available via web and as a mobile App. The platform is designed as a one-stop shop for the information needs of African women in business.</p>
+                        <a class="text-uppercase" href="http://www.womenconnect.org/">Read More <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<!-- Blog Start -->
+
+
 <!-- endproduct -->
         <!-- Vendor Start -->
-        <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+     <!-- <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
             <div class="container py-5 mb-5">
                 <div class="bg-white">
                     <div class="owl-carousel vendor-carousel">
-                        <img src="{% static 'users/images/EAC/eaclogo.png'%}" alt="">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr6ThffyZ9_ctC8QHCzwD865T6a0ISpEPS7c3B_pnYNbRC-Hy9DSAYRUknr_ymp9tbldg&usqp=CAU" alt="">
                         <img src="/img/images/ihameLogo.png" alt="">
                         <img src="/img/images/EAC/eaclogo.png" alt="">
                         <img src="/img/images/EAC/South Sudan/southSudanLogo.jfif" alt="">
@@ -146,7 +354,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>  -->
     
 
 {% endblock content %}

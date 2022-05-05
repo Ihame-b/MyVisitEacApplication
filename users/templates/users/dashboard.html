@@ -1,0 +1,351 @@
+{% extends 'users/basedash.html' %}
+{% block title %}
+    {%  if user.is_authenticated %}
+            {% if user.is_hospital %}
+                Hospital | Dashboard
+            {% elif user.is_deliver %}
+                Health Center | Dashboard
+            {% elif user.is_superuser %}
+                Admin | Dashboard
+            {% endif %}
+    {% endif %}
+{% endblock title %}
+
+{% block username %}
+    {%  if user.is_authenticated %}
+        {{user.name}}
+    {% endif %}
+{% endblock username %}
+
+{% block blood-box %}
+{% if stock %}
+{% for k, v in stock %}
+<div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>{{k}}</h3>
+                  <p>{{v}}</p>
+              </div>
+              <div class="icon">
+<!--                <i class="ion ion-scissors"></i>-->
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+{% endfor %}
+{% endif %}
+{% endblock blood-box %}
+
+
+
+
+{% block sidenavMenu %}
+    {%  if user.is_authenticated %}
+
+<!--hospital sidenav dashboard-->
+            {% if user.is_hospital %}
+<!--            <li class="nav-item has-treeview">-->
+<!--                    <a href="#" class="nav-link">-->
+<!--                      <i class="fas fa-hospital"></i>-->
+<!--                      <p>-->
+<!--                        Health Centers-->
+<!--                        <i class="fas fa-angle-left right"></i>-->
+<!--                      </p>-->
+<!--                    </a>-->
+<!--                <ul class="nav nav-treeview">-->
+<!--                      <li class="nav-item">-->
+<!--                        <a href="{% url 'register' %}" class="nav-link">-->
+<!--                          <i class="fas fa-user-plus"></i>-->
+<!--                          <p>Add new Healthy Center</p>-->
+<!--                        </a>-->
+<!--                      </li>-->
+<!--                </ul>-->
+<!--            </li>-->
+
+          <li class="nav-item">
+            <a href="{% url 'requests' %}" class="nav-link">
+              <i class="fas fa-hand-holding-usd"></i>
+              <p>Request</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'stock' %}" class="nav-link">
+              <i class="fas fa-database"></i>
+              <p>My Stock</p>
+            </a>
+          </li>
+
+<!-- Health center sidenav dashboard -->
+          {% elif user.is_health_center %}
+                Health Center | Dashboard
+
+          <li class="nav-item">
+            <a href="{% url 'requests' %}" class="nav-link">
+              <i class="fas fa-hand-holding-usd"></i>
+              <p>Request</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'stock' %}" class="nav-link">
+              <i class="fas fa-database"></i>
+              <p>My Stock</p>
+            </a>
+          </li>
+
+<!--Admin sidenav dashboard-->
+            {% elif user.is_superuser %}
+<!--            <li class="nav-item has-treeview menu-open">-->
+<!--                    <a href="#" class="nav-link active">-->
+<!--                      <i class="nav-icon fas fa-hospital-symbol"></i>-->
+<!--                      <p>-->
+<!--                        Hospitals-->
+<!--                        <i class="right fas fa-angle-left"></i>-->
+<!--                      </p>-->
+<!--                    </a>-->
+<!--                <ul class="nav nav-treeview">-->
+<!--                      <li class="nav-item">-->
+<!--                        <a href="#" class="nav-link active">-->
+<!--                          <i class="fas fa-plus"></i>-->
+<!--                          <p>Reference Hospitals</p>-->
+<!--                        </a>-->
+<!--                      </li>-->
+<!--                      <li class="nav-item">-->
+<!--                        <a href="#" class="nav-link active">-->
+<!--                          <i class="fas fa-plus-circle"></i>-->
+<!--                          <p>District Hospitals</p>-->
+<!--                        </a>-->
+<!--                      </li>-->
+<!--                </ul>-->
+<!--            </li>-->
+
+<!--            <li class="nav-item has-treeview">-->
+<!--                    <a href="#" class="nav-link">-->
+<!--                      <i class="fas fa-hospital"></i>-->
+<!--                      <p>-->
+<!--                        Health Centers-->
+<!--                        <i class="fas fa-angle-left right"></i>-->
+<!--                      </p>-->
+<!--                    </a>-->
+<!--                <ul class="nav nav-treeview">-->
+<!--                      <li class="nav-item">-->
+<!--                        <a href="{% url 'register' %}" class="nav-link">-->
+<!--                          <i class="fas fa-user-plus"></i>-->
+<!--                          <p>Add new Healthy Center</p>-->
+<!--                        </a>-->
+<!--                      </li>-->
+<!--                </ul>-->
+<!--            </li>-->
+
+                      <li class="nav-item">
+                        <a href="{% url 'requests' %}" class="nav-link" data>
+                          <i class="fas fa-hand-holding-usd"></i>
+                          <p>Request</p>
+                        </a>
+                      </li>
+
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                          <i class="fas fa-database"></i>
+                          <p>My Stock</p>
+                        </a>
+                      </li>
+<!--                </ul>-->
+<!--          </li>-->
+
+
+            {% endif %}
+    {% endif %}
+{% endblock sidenavMenu %}
+
+{%  block content %}
+    {%  if user.is_authenticated %}
+            {% if user.is_hospital %}
+                <div class="d-flex justify-content-between">
+                  <a href="" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modal-add-request">
+                    <i class="fas fa-plus"></i>Add Request
+                  </a>
+                </div>
+
+                <form action="">
+                  {% csrf_token %}
+                  <div class="input-group input-group-sm mb-3 mt-4">
+                    <input type="text" name="search" id="" class="form-control" placeholder="Search ...">
+                    <button  class="btn btn-secondary"><i class="fas fa-search"></i></button>
+                    <a href="{% url 'dashboard' %}" class="btn btn-dark ml-2"><i class="fas fa-sync"></i></a>
+                  </div>
+                </form>
+
+                <table class="table table-bordered table-sm mt-4" style="">
+                  <thead class="table-secondary " >
+                    <tr>
+                      <th>id</th>
+                      <th>Quantity</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {%  if all_requests %}
+                    {% for all_request in all_requests %}
+                     <tr>
+                       <td>{{all_request.id}}</td>
+                       <td>{{all_request.quantity}}</td>
+                       <td>{{all_request.status}}</td>
+                       <td>
+                         <a href="#" class="btn btn-primary" title="Edit"><i class="fas fa-edit"></i></a>
+                         <a href="#" class="btn btn-danger" title="Delete"><i class="fas fa-trash"></i></a>
+                       </td>
+                     </tr>
+                    {% endfor %}
+                  {% endif %}
+                  </tbody>
+
+                </table>
+
+                <!--pagination-->
+                <nav class="mt-4" aria-label="Page navigation example">
+                  {%  if all_requests.has_other_pages %}
+                  <ul class="pagination justify-content-left">
+                      {%  if all_requests.has_previous %}
+                    <a href="?page=1" class="btn btn-outline-primary mb-4" style="width:60px; border-radius:1px; border:1px solid #d3d3d3">First</a>
+                    <li class="page-item"><a href="?page={{ all_requests.previous_page_number }}" class="page-link"><i class="fas fa-angle-double-left"></i></a></li>
+                      {% else %}
+                    <li class="page-item disabled"></li>
+                      {% endif %}
+
+                      {% for i in all_requests.paginator.page_range %}
+                      {% if all_requests.number == i %}
+                    <li class="page-item active"><span class="page-link">{{i}}<span class="sr-only"></span></span></li>
+                      {% else %}
+                    <li class="page-item"><a href="?page={{i}}" class="page-link">{{i}}</a></li>
+                      {% endif %}
+                      {% endfor %}
+
+                        {% if all_requests.has_next %}
+                        <li class="page-item"><a href="?page={{all_requests.next_page_number}}" class="page-link"><i class="fas fa-angle-double-right"></i></a></li>
+                        <a href="?page={{all_requests.paginator.num_pages}}" class="btn btn-outline-primary mb-4" style="width:60px; border-radius:1px; border:1px solid #d3d3d3; border-left: none; ">Last</a>
+                        {% else  %}
+                        <li class="page-item disabled"></li>
+                        {% endif %}
+                  </ul>
+                  {% endif %}
+
+                </nav>
+
+        <!-- modal for add request -->
+            <div class="modal fade" id="modal-add-request">
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+            <h4 class="modal-title">Add New Request</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="blood-quantity">Blood Quantity</label>
+                  <input type="number" class="form-control" name="blood-quantity" id="blood-quantity" placeholder="Enter Packages">
+                </div>
+                <div class="form-group">
+                  <label for="blood-type">Blood Type</label>
+                    <select name="blood-type" id="blood-type" class="form-control">
+                        <option value="">A+</option>
+                        <option value="">A-</option>
+                         <option value="">B+</option>
+                        <option value="">B-</option>
+                        <option value="">AB+</option>
+                        <option value="">AB-</option>
+                        <option value="">O+</option>
+                        <option value="">O-</option>
+                    </select>
+                  <input type="hidden" class="form-control" value="" name="request-province" placeholder="Province">
+                  <input type="hidden" class="form-control" value="" name="request-district" placeholder="District">
+                </div>
+                 <button type="submit" class="btn btn-primary mt-3">Save Request</button>
+                </form>
+            </div>
+            </div>
+            </div>
+            </div>
+
+
+            {% elif user.is_health_center %}
+            <div>
+                <p>Your are  Health Center</p>
+            </div>
+
+            {% elif user.is_superuser %}
+            <div>
+                <p id="chart"></p>
+<!--                <p>admin</p>-->
+
+                <script>
+                    var options = {
+                      series: [{
+                      name: 'Net Profit',
+                      data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
+                    }, {
+                      name: 'Revenue',
+                      data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+                    }, {
+                      name: 'Free Cash Flow',
+                      data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
+                    }],
+                      chart: {
+                      type: 'bar',
+                      height: 350
+                    },
+                    plotOptions: {
+                      bar: {
+                        horizontal: false,
+                        columnWidth: '55%',
+                        endingShape: 'rounded'
+                      },
+                    },
+                    dataLabels: {
+                      enabled: false
+                    },
+                    stroke: {
+                      show: true,
+                      width: 2,
+                      colors: ['transparent']
+                    },
+                    xaxis: {
+                      categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                    },
+                    yaxis: {
+                      title: {
+                        text: '$ (thousands)'
+                      }
+                    },
+                    fill: {
+                      opacity: 1
+                    },
+                    tooltip: {
+                      y: {
+                        formatter: function (val) {
+                          return "$ " + val + " thousands"
+                        }
+                      }
+                    }
+                    };
+
+                    var chart = new ApexCharts(document.querySelector("#chart"), options);
+                    chart.render();
+                </script>
+
+            </div>
+
+
+            {% endif %}
+    {% endif %}
+
+{%  endblock content %}
+
+
+
