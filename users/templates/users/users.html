@@ -172,7 +172,7 @@ $(document).ready(function(){
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Phone</th>
+                        <!-- <th>Phone</th> -->
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -182,11 +182,11 @@ $(document).ready(function(){
                               <tr>
                                 <td>{{pro.username}}</td>
                                 <td>{{pro.email}}</td>
-                                <td>{{pro.phone}}</td>
+                                <!-- <td>{{pro.password1}}</td> -->
                                 <td>
                                     <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                                    <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                    <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                    <a href="edit" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                                    <a href="{%url 'delete' id=pro.id  %}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                                 </td>
                               </tr>
                               {% endfor %}   

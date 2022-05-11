@@ -24,7 +24,7 @@ class Product(models.Model):
         ('VORCANOES','vorcanoes'),
         ('TRANSPORTANTION', 'transportation'),
         ('ACCOMODATION', 'accomodation'),
-        ('HOTEL/RESTAURANTS','hotel/restaurants'),
+        ('RESTAURANTS','restaurants'),
         ('NATIONAL PARKS', 'national Parks'),
         ('CULTURE & HERITAGE', 'culture & heritage'),
         ('SPORTS & ADVANTURE', 'sports & advanture'),

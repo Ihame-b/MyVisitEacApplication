@@ -64,15 +64,16 @@
 </div>
 
 <br>
-<h1 style="color: black; padding-left: 35px; align-content: center;" class="text-center">Available Tourist </h1>
+<h1 style="color: greenyellow; padding-left: 35px; align-content: center;" class="text-center">Available Tourist </h1>
 <div class=" container">
     <div class="search-box">
         <i class="bx bx-search"></i>
         <input type="text" placeholder="Search Tourist">
     </div>
 
-    <h1 style="color: black;">Available VOLCANOES </h1>
+    <h1 style="color: white;">Available VOLCANOES </h1>
     <div class="row">
+        
     {% for pro in product %}
     {% if pro.category == "VORCANOES"%}
 
@@ -92,7 +93,7 @@
 </div> 
 
 <br><br> 
-    <h1 style="color: black;">Available HOTEL </h1>
+    <h1 style="color: white;">Available HOTEL </h1>
     <div class="row">
     {% for pro in product %}
     {% if pro.category == "HOTEL"%}
@@ -113,7 +114,7 @@
 </div>
 
     <br><br>
-    <h1 style="color: black;">Available HILLS </h1>
+    <h1 style="color: white;">Available HILLS </h1>
     <div class="row">
     {% for pro in product %}
     {% if pro.category == "HILLS"%}
@@ -134,7 +135,7 @@
 </div>
 
 <br><br>
-<h1 style="color: black;">Available ACCOMODATION </h1>
+<h1 style="color: white;">Available ACCOMODATION </h1>
 <div class="row">
 {% for pro in product %}
 {% if pro.category == "ACCOMODATION"%}
@@ -156,7 +157,7 @@
 
 
 <br><br>
-<h1 style="color: black;">Available TRANSPORTANTION </h1>
+<h1 style="color: white;">Available TRANSPORTANTION </h1>
 <div class="row">
 {% for pro in product %}
 {% if pro.category == "TRANSPORTANTION"%}
@@ -177,10 +178,10 @@
 </div>
 
 <br><br>
-<h1 style="color: black;">Available HOTEL/RESTAURANTS </h1>
+<h1 style="color: white;">Available RESTAURANTS </h1>
 <div class="row">
 {% for pro in product %}
-{% if pro.category == "HOTEL/RESTAURANTS"%}
+{% if pro.category == "RESTAURANTS"%}
         
             <div class="col-lg-4">
                 <div class="card">
@@ -198,7 +199,7 @@
 </div>
 
 <br><br>
-<h1 style="color: black;">Available NATIONAL PARKS </h1>
+<h1 style="color: white;">Available NATIONAL PARKS </h1>
 <div class="row">
 {% for pro in product %}
 {% if pro.category == "NATIONAL PARKS"%}
@@ -219,7 +220,7 @@
 </div>
 
 <br><br>
-<h1 style="color: black;">Available CULTURE & HERITAGE </h1>
+<h1 style="color: white;">Available CULTURE & HERITAGE </h1>
 <div class="row">
 {% for pro in product %}
 {% if pro.category == "CULTURE & HERITAGE"%}
@@ -243,7 +244,7 @@
 
 
 <br><br>
-<h1 style="color: black;">SPORTS & ADVANTURE </h1>
+<h1 style="color: white;">SPORTS & ADVANTURE </h1>
 <div class="row">
 {% for pro in product %}
 {% if pro.category == "SPORTS & ADVANTURE"%}

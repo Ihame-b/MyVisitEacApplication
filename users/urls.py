@@ -11,6 +11,7 @@ urlpatterns = [
  path('feedback/', views.feedback, name='feedback'),
  path('adminpage/', views.admin, name='adminpage'),
  path('Tusers/', views.usersTble, name='Tusers'),
+ path('Tpro/', views.productTble, name='Tpro'),
  path('login/', auth_view.LoginView.as_view(template_name='users/login.html'), name='login'),
  path('logout/', auth_view.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
 
@@ -21,5 +22,8 @@ path('request/', views.request, name='request'),
 path('stock/', views.stock, name='stock'),
 
 path('polls/', views.index, name='polls'),
+path('delete/<int:id>', views.userdelete, name='delete'),
+path('deletep/<int:id>', views.prodelete, name='deletep'),
+# path('update/<int:id>', views.userupdate, name='update')
 
 ]

@@ -4,6 +4,7 @@ from django.shortcuts import redirect, render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from yaml import serialize
+from django.contrib.auth.decorators import login_required
 
 from Papi.forms import CreateProducts
 from .serializes import ProductSelializer
@@ -86,7 +87,7 @@ class ProductCreateView(generics.GenericAPIView):
 
 
 
-
+@login_required
 def create_Peoduct_View(request):
     form = CreateProducts()
     if request.method == 'POST':

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,6 +28,7 @@ SECRET_KEY = '!6-1ycjqojx2^ut-laom!o6zy52%vb_f=078lm=ntdp!f#6&*t'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 # Application definition
@@ -55,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = 'Tourist_product_api.urls'
@@ -81,12 +84,39 @@ WSGI_APPLICATION = 'Tourist_product_api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
+
+
+DATABASES={}
+
+if DEBUG:
+    DATABASES["default"]={
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
-}
+else:
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+    DATABASES['default'] = dj_database_url.config(default=config('DATABASE_URL'))
+
+
+
+
+# if DEBUG:
+#     DATABASES['default']:{
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3'),
+#     }
+# else:
+#     DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+#     DATABASES['default'] = dj_database_url.config(default='postgres://...'}
+
+
 
 # pymysql.install_as_MySQLdb()
 # DATABASES = {
@@ -172,6 +202,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_URL = '/static/'
+STATIC_ROOT= os.path.join(BASE_DIR,'staticfiles/')
+
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
