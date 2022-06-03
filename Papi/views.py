@@ -13,6 +13,7 @@ from rest_framework import generics,status
 from . import serializes
 
 # Create your views here.
+#hello guys
 
 
 def productview(request):
