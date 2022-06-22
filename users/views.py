@@ -2,6 +2,7 @@ from collections import UserList
 from email import message
 from itertools import product
 from urllib.request import Request
+from xml.dom.minidom import Document
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
@@ -16,6 +17,9 @@ from users.forms import User
 
 def index(request):
     return render(request, 'users/index.html')
+
+def contact(request):
+    return render(request, 'users/contact.html')    
 
 # Create your views here.
 def home(request):
@@ -95,13 +99,13 @@ def prodelete(request, id):
     return render(request, 'users/product.html')    
 
 
-# @login_required
-# def userupdate(request, id):
-#     user = User.objects.get(id=id)
-#     user.name = document.getElementById("name")
-#     user.email =document.getElementById("department")
-#     user.phone = document.getElementById("phone")
-#     user.save()
-#     return render(request, '')         
+@login_required
+def userupdate(request, id):
+    user = User.objects.get(id=id)
+    user.name = Document.getElementById("name")
+    user.email =Document.getElementById("department")
+    user.phone = Document.getElementById("phone")
+    user.save()
+    return render(request, '')         
 
           

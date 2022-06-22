@@ -21,9 +21,10 @@ path('dash/', views.dash, name='dash'),
 path('request/', views.request, name='request'),
 path('stock/', views.stock, name='stock'),
 
-path('polls/', views.index, name='polls'),
+# path('polls/', views.index, name='polls'),
 path('delete/<int:id>', views.userdelete, name='delete'),
 path('deletep/<int:id>', views.prodelete, name='deletep'),
 # path('update/<int:id>', views.userupdate, name='update')
+path('contact/', views.contact, name='contact')
 
 ]
